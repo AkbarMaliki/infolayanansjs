@@ -1,0 +1,17 @@
+#untuk desktop dan android/ios (cordova) hybrid
+
+1. pada file public/index.html tutup akses <!-- <base href="/" /> -->
+2. pada src/router.js , ubah mode router menjadi "hash"
+
+npm run cordova-build-andorid 
+npm run electron:build 
+
+#untuk website deployment 
+
+1. pada file public/index.html buka akses <base  href ="/" />
+2. pada src/router.js, ubah mode router menjadi "history"
+3. pada now.json, ganti name dan alias menjadi link url yang bisa diakses
+3. pada vue.config.js , pada bagian PrerenderSPAPlugin tambahkan routes 
+  yang ingin di prerender 
+
+npm run deploy  
