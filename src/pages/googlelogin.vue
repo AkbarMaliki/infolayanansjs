@@ -5,6 +5,10 @@
 </svg>
     <div class="row justify-content-center " style="height:75vh;">
       <div class="col-md-8">
+        <button type="button" @click="getToken" v-show="idToken.length>0" class="btn btn-sm btn-primary  ">
+          get id token to react native
+        </button>
+        {{idToken}}
         <div class="card animate__animated animate__backInDown">
           <div class="card-header text-center">
               <img src="https://img.icons8.com/bubbles/2x/google-logo.png" class="kinoLightBox img-fluid float-right" style="height:40px;">
@@ -109,10 +113,14 @@ export default {
       },
       Oauth:false,
       cordova: false,
-      error: null
+      error: null,
+      idToken:""
     };
   },
   methods: {
+    getToken(){
+      window.postMessage("Sending data from WebView");
+    },
     loginAuth() {
       firebase
         .auth()
@@ -135,29 +143,42 @@ export default {
     googleAuth() {
       this.Oauth=true
       const provider = new firebase.auth.GoogleAuthProvider();
-      firebase
-        .auth()
-        .signInWithPopup(provider)
-        .then(data => {
-          let user = {
-            uid: data.user.uid,
-            displayName: data.user.displayName,
-            email: data.user.email,
-            emailVerified: data.user.emailVerified,
-            emailnotif:data.user.email
-          };
-          this.$store.commit("changeUsers", user);
-          localStorage.setItem("users", JSON.stringify(user));
-          console.log('user',user)
-          db.collection("users")
-            .doc(data.user.uid)
-            .set(user, { merge: true }).then(res=>{
-              this.$router.push("/afterauth");
-            })
-        })
-        .catch(err => {
-          alert("Oops. " + err.message);
-        });
+       firebase.auth().getRedirectResult().then(function (result) {
+        // if (!user) {
+          // User not logged in, start login.
+          firebase.auth().signInWithRedirect(provider);
+        // } else {
+          // user logged in, go to home page.
+          // alert('go home')
+        // }
+    }).catch(function (error) {
+      // Handle Errors here.
+      console.log(error)
+      // ...
+    });
+      // firebase
+      //   .auth()
+      //   .signInWithPopup(provider)
+      //   .then(data => {
+      //     let user = {
+      //       uid: data.user.uid,
+      //       displayName: data.user.displayName,
+      //       email: data.user.email,
+      //       emailVerified: data.user.emailVerified,
+      //       emailnotif:data.user.email
+      //     };
+      //     this.$store.commit("changeUsers", user);
+      //     localStorage.setItem("users", JSON.stringify(user));
+      //     console.log('user',user)
+      //     db.collection("users")
+      //       .doc(data.user.uid)
+      //       .set(user, { merge: true }).then(res=>{
+      //         this.$router.push("/afterauth");
+      //       })
+      //   })
+      //   .catch(err => {
+      //     alert("Oops. " + err.message);
+      //   });
     },
     facebookAuth() {
       this.Oauth=true
@@ -220,12 +241,17 @@ export default {
     }
   },
   mounted() {
+    let that = this
+    firebase.auth().getRedirectResult().then(function(result) {
+      that.idToken = result.credential.idToken
+      that.$forceUpdate()
+      console.log(result)
+    })
     // if(this.Oauth){
 
     // }else{
     //   this.$store.dispatch("ceklogin", { true: "/afterauth", false: true });
     // }
-    let that = this;
     // document.addEventListener("deviceready", function() {
     //   that.cordova = true;
     // });
