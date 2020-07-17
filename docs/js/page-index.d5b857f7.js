@@ -1,2 +1,0 @@
-(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["page-index"],{9261:function(e,t,n){"use strict";n.r(t);var r=function(){var e=this,t=e.$createElement;e._self._c;return e._m(0)},c=[function(){var e=this,t=e.$createElement,n=e._self._c||t;return n("div",[n("br"),n("br"),n("br"),n("br"),n("p",{staticClass:"text-center"},[e._v("REST API FRONT JS")])])}],s={},a=s,l=n("2877"),i=Object(l["a"])(a,r,c,!1,null,null,null);t["default"]=i.exports}}]);
-//# sourceMappingURL=page-index.d5b857f7.js.map

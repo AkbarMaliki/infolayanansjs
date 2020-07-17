@@ -7,76 +7,76 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 
-// import firebase from 'firebase/app';
-// import 'firebase/auth';        // for authentication
-// import 'firebase/storage';     // for storage
-// import 'firebase/database';    // for realtime database
-// import 'firebase/firestore';   // for cloud firestore
-// import 'firebase/messaging';   // for cloud messaging
-// import "firebase/analytics";  
-// import 'firebase/functions'; 
-// if (typeof cordova === "object") {
-//   const firebaseConfig = {
-//     apiKey: "AIzaSyAyvbE3CBnxqV6wh4s1xTRwjKzq5zSYtRk",
-//     authDomain: "vuez-63625.firebaseapp.com",
-//     databaseURL: "https://vuez-63625.firebaseio.com",
-//     projectId: "vuez-63625",
-//     storageBucket: "vuez-63625.appspot.com",
-//     messagingSenderId: "527099963081",
-//     appId: "1:527099963081:web:6422331458f6048b098f18",
-//     measurementId: "G-S2B09P6X2W"
-//   };
-//   firebase.initializeApp(firebaseConfig);
-//   firebase.analytics();
-// }else{
-//   if(window.location.href.indexOf('localhost:80')!=-1){
-//     const firebaseConfig = {
-//       apiKey: "AIzaSyAyvbE3CBnxqV6wh4s1xTRwjKzq5zSYtRk",
-//       authDomain: "vuez-63625.firebaseapp.com",
-//       databaseURL: "https://vuez-63625.firebaseio.com",
-//       projectId: "vuez-63625",
-//       storageBucket: "vuez-63625.appspot.com",
-//       messagingSenderId: "527099963081",
-//       appId: "1:527099963081:web:6422331458f6048b098f18",
-//       measurementId: "G-S2B09P6X2W"
-//     };
-//     firebase.initializeApp(firebaseConfig);
-//     firebase.analytics();
-//   }
-//   else{
-//     const firebaseConfig = {
-//       apiKey: "AIzaSyAyvbE3CBnxqV6wh4s1xTRwjKzq5zSYtRk",
-//       authDomain: "vuez-63625.firebaseapp.com",
-//       databaseURL: "https://vuez-63625.firebaseio.com",
-//       projectId: "vuez-63625",
-//       storageBucket: "vuez-63625.appspot.com",
-//       messagingSenderId: "527099963081",
-//       appId: "1:527099963081:web:6422331458f6048b098f18",
-//       measurementId: "G-S2B09P6X2W"
-//     };
-//     firebase.initializeApp(firebaseConfig);
-//     firebase.analytics();
-//     const messaging = firebase.messaging();
+import firebase from 'firebase/app';
+import 'firebase/auth';        // for authentication
+import 'firebase/storage';     // for storage
+import 'firebase/database';    // for realtime database
+import 'firebase/firestore';   // for cloud firestore
+import 'firebase/messaging';   // for cloud messaging
+import "firebase/analytics";  
+import 'firebase/functions'; 
+if (typeof cordova === "object") {
+  const firebaseConfig = {
+    apiKey: "AIzaSyAyvbE3CBnxqV6wh4s1xTRwjKzq5zSYtRk",
+    authDomain: "vuez-63625.firebaseapp.com",
+    databaseURL: "https://vuez-63625.firebaseio.com",
+    projectId: "vuez-63625",
+    storageBucket: "vuez-63625.appspot.com",
+    messagingSenderId: "527099963081",
+    appId: "1:527099963081:web:6422331458f6048b098f18",
+    measurementId: "G-S2B09P6X2W"
+  };
+  firebase.initializeApp(firebaseConfig);
+  // firebase.analytics();
+}else{
+  if(window.location.href.indexOf('localhost:80')!=-1){
+    const firebaseConfig = {
+      apiKey: "AIzaSyAyvbE3CBnxqV6wh4s1xTRwjKzq5zSYtRk",
+      authDomain: "vuez-63625.firebaseapp.com",
+      databaseURL: "https://vuez-63625.firebaseio.com",
+      projectId: "vuez-63625",
+      storageBucket: "vuez-63625.appspot.com",
+      messagingSenderId: "527099963081",
+      appId: "1:527099963081:web:6422331458f6048b098f18",
+      measurementId: "G-S2B09P6X2W"
+    };
+    firebase.initializeApp(firebaseConfig);
+    // firebase.analytics();
+  }
+  else{
+    const firebaseConfig = {
+      apiKey: "AIzaSyAyvbE3CBnxqV6wh4s1xTRwjKzq5zSYtRk",
+      authDomain: "vuez-63625.firebaseapp.com",
+      databaseURL: "https://vuez-63625.firebaseio.com",
+      projectId: "vuez-63625",
+      storageBucket: "vuez-63625.appspot.com",
+      messagingSenderId: "527099963081",
+      appId: "1:527099963081:web:6422331458f6048b098f18",
+      measurementId: "G-S2B09P6X2W"
+    };
+    firebase.initializeApp(firebaseConfig);
+    // firebase.analytics();
+    // const messaging = firebase.messaging();
     
-//     // Add the public key generated from the console here.
-//     messaging.usePublicVapidKey("BOyWiIWmXY2AVZ-oe7InZFiYRrJDoIGet3J4ygFUAKXMg-WFi9heoPybaX3Syoa7UryLSGUtqUAj8wAdLM0pBM8");
+    // Add the public key generated from the console here.
+    // messaging.usePublicVapidKey("BOyWiIWmXY2AVZ-oe7InZFiYRrJDoIGet3J4ygFUAKXMg-WFi9heoPybaX3Syoa7UryLSGUtqUAj8wAdLM0pBM8");
     
-//     messaging.requestPermission().then(() => {
-//       console.log('Notification permission granted.');
-//       messaging.getToken().then((token) => {
-//         console.log(token);
-//         localStorage.setItem('notifid',token);
-//       })
-//     }).catch((err) => {
-//       console.log('Unable to get permission to notify.', err);
-//     });
+    // messaging.requestPermission().then(() => {
+    //   console.log('Notification permission granted.');
+    //   messaging.getToken().then((token) => {
+    //     console.log(token);
+    //     localStorage.setItem('notifid',token);
+    //   })
+    // }).catch((err) => {
+    //   console.log('Unable to get permission to notify.', err);
+    // });
     
-//     messaging.onMessage(payload => {
-//       console.log("Message received. ", payload);
-//       const { title, ...options } = payload.notification;
-//     });
-//   }
-// }
+    // messaging.onMessage(payload => {
+    //   console.log("Message received. ", payload);
+    //   const { title, ...options } = payload.notification;
+    // });
+  }
+}
 
 Vue.config.productionTip = false
 

@@ -1,5 +1,6 @@
 <template>
     <div>
+        <button type="button" @click="$router.push('/googlelogin')" class="btn btn-sm btn-primary  ">test</button>
         <br>
         <br>
         <br>
@@ -9,5 +10,11 @@
 </template>
 <script>
 export default {
+    methods: {
+        test(){
+            alert('y')
+            window.postMessage("Sending data from WebView");
+        }
+    },
 }
 </script>
