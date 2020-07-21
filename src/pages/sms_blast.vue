@@ -8,7 +8,7 @@
       />
     </svg>
     <div class="row">
-      <div class="offset-2 col-8 p-4">
+      <div class="offset-2 col-8 p-4 animated fadeInDown">
         <p class="text-center font-bold text-red-lighter">KIRIM Whatsapp</p>
         <div class="sm-form">
           <textarea

@@ -23,9 +23,6 @@
         </div>
         <div class="text-center">
           <button type="button" @click="register" class="btn btn-sm btn-primary">register</button>
-          <div id="sama" v-if="sama=='true'">sama</div>
-          <div id="tidaksama" v-else-if="sama=='false'">tidak sama</div>
-          <div id="nope" v-else>nope</div>
         </div>
       </div>
     </div>
@@ -58,9 +55,10 @@ export default {
           let hasil = false
           data.forEach(e => {
             if (e.id == that.vdata.id) {
-              hasil='true'
+                that.$router.push('/sms_blast')
             } else {
               hasil='false'
+              window.close() ;
             }
           });
           this.sama=hasil
