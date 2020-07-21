@@ -55,6 +55,7 @@ export default {
           let hasil = false
           data.forEach(e => {
             if (e.id == that.vdata.id) {
+                localStorage.setItem('machineid',e.id)
                 that.$router.push('/sms_blast')
             } else {
               hasil='false'

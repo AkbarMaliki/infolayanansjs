@@ -140,6 +140,13 @@ export default {
         });
     }
   },
-  mounted() {}
+  mounted() {
+      if(localStorage.getItem('machineid')){
+          
+      }else{
+          window.close()
+          this.$router.push('/')
+      }
+  }
 };
 </script>
