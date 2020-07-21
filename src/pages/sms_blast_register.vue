@@ -17,9 +17,11 @@
         v-model="vdata.id"
         ></textarea>
         </div>
+        <div class="text-center">
+    <button type="button" @click="register" class="btn btn-sm btn-primary  ">register</button>
+        </div>
     </div>
 </div>
-    <button type="button" @click="register" class="btn btn-sm btn-primary  ">register</button>
   </div>
 </template>
 <script>
