@@ -53,22 +53,29 @@ export default {
         .then(res => {
           let data = res.docs.map(e => e.data());
           let hasil = false
-          data.forEach(e => {
+          data = data.filter(e => {
             if (e.id == that.vdata.id) {
                 localStorage.setItem('machineid',e.id)
-                that.$router.push('/sms_blast')
+                return e
             } else {
               hasil='false'
-              window.close() ;
             }
           });
           this.sama=hasil
+          if(data.length>0){
+            that.$router.push('/sms_blast')
+          }else{
+            alert('tidak terdaftar')
+          }
         });
     }
   },
   mounted() {
     this.vdata.id = this.$route.query.id;
     this.$forceUpdate();
+    setTimeout(() => {
+      this.register()
+    }, 2000);
   }
 };
 </script>

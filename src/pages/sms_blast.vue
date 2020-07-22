@@ -21,135 +21,151 @@
             v-model="message"
           ></textarea>
           <br />
-    <wysiwyg v-model="message" />
-          <br>
+          <wysiwyg v-model="message" />
+          <br />
           <div class="text-center">
-             <button type="button" @click="kirim" class="btn btn-sm btn-success  "><span class="typcn typcn-message-typing"></span> Kirim</button>
+            <button type="button" @click="kirim" class="btn btn-sm btn-success">
+              <span class="typcn typcn-message-typing"></span> Kirim
+            </button>
           </div>
           <!-- <input type="file" name="file" @change="compress($event)" />
           <br>
           <button type="button" @click="gambar=''" class="btn btn-sm btn-danger  " v-if="gambar.length>0">Hapus Gambar</button>
           <br />
-          <img :src="gambar" v-if="gambar.length>0" class="kinoLightBox img-fluid " style="height:400px;width:300px;;" alt="top"> -->
+          <img :src="gambar" v-if="gambar.length>0" class="kinoLightBox img-fluid " style="height:400px;width:300px;;" alt="top">-->
         </div>
       </div>
       <div class="offset-2 col-8 p-4">
-          <div v-text="hasil" id="txtnya" v-if="mulai">
-
-          </div>
+        <div v-text="hasil" id="txtnya" v-if="mulai"></div>
       </div>
     </div>
   </div>
 </template>
 <script>
-import axios from 'axios'
-import firebase from 'firebase'
+import axios from "axios";
+import firebase from "firebase";
 
-let db = firebase.firestore()
+let db = firebase.firestore();
 // let rdb = firebase.database()
 // import autophp from '@/plugins/autophp';
 // let sdb = new autophp();
 export default {
-  data () {
+  data() {
     return {
       vdata: {},
-      file: '',
+      file: "",
       imgs: [],
       ready: false,
       mulai: false,
-      gambar: '',
-      message: ''
-    }
+      gambar: "",
+      message: ""
+    };
   },
   computed: {
-    hasil () {
-      let txt = this.message
-      return txt
+    hasil() {
+      let txt = this.message;
+      txt = encodeURI(txt);
+      return txt;
     }
   },
   methods: {
-    test () {
-      alert('y')
+    test() {
+      alert("y");
     },
-    kirim () {
-      this.mulai = !this.mulai
+    kirim() {
+      this.mulai = !this.mulai;
       // window.location = 'https://api.whatsapp.com/send?phone=6282251970006&text='+encodeURIComponent(this.gambar)
-    //   window.location = `https://api.whatsapp.com/send?phone=6282251970006&text=${this.txt}`
+      //   window.location = `https://api.whatsapp.com/send?phone=6282251970006&text=${this.txt}`
       // "https://akbarmaliki.github.io/infolayanansjs/#/sms_blast_on";
     },
-    getFile (e) {
-      this.file = e.target.files[0]
+    getFile(e) {
+      this.file = e.target.files[0];
     },
-    compress (event) {
+    compress(event) {
       // this.imgList=e.target.files;
       if (event.target.files[0].size > 10000000) {
-        alert('File yang di upload tidak sesuai kriteria')
+        alert("File yang di upload tidak sesuai kriteria");
       } else {
         if (event.target.files.length > 0) {
-          let img = []
-          let hasil = []
-          let compress = 'null'
-          let filenya
+          let img = [];
+          let hasil = [];
+          let compress = "null";
+          let filenya;
           for (let i = 0; i < event.target.files.length; i++) {
-            this.imgs.push(event.target.files[i])
-            var selectedFile = event.target.files[i]
-            var reader = new FileReader()
-            reader.onload = function (event) {
+            this.imgs.push(event.target.files[i]);
+            var selectedFile = event.target.files[i];
+            var reader = new FileReader();
+            reader.onload = function(event) {
               //   img.push(event.target.result)
-            }
-            reader.readAsDataURL(selectedFile)
-            filenya = event.target.files[i]
+            };
+            reader.readAsDataURL(selectedFile);
+            filenya = event.target.files[i];
             compress =
               filenya.size < 1000000
                 ? 30
                 : filenya.size < 2000000
-                  ? 25
-                  : filenya.size < 3000000
-                    ? 20
-                    : filenya.size < 4000000
-                      ? 15
-                      : 10
+                ? 25
+                : filenya.size < 3000000
+                ? 20
+                : filenya.size < 4000000
+                ? 15
+                : 10;
             this.$daycaca.compress(filenya, compress, data => {
-              this.gambar = data
-              img.push(data)
+              this.gambar = data;
+              img.push(data);
               this.$urltofile(data, filenya.name, filenya.type).then(res => {
-                hasil.push(res)
-              })
-            })
+                hasil.push(res);
+              });
+            });
           }
-          console.log('base64', img)
-          this.gambar = img
+          console.log("base64", img);
+          this.gambar = img;
           setTimeout(() => {
-            console.log('file', hasil[0])
-            this.file = hasil[0]
-            this.ready = true
-          }, 1000)
+            console.log("file", hasil[0]);
+            this.file = hasil[0];
+            this.ready = true;
+          }, 1000);
           //   this.$emit('upload', hasil)
         }
       }
     },
-    inputfile () {
-      let fd = new FormData()
-      fd.append('file', this.file)
-      fd.append('id', this.$store.state.users.id)
+    inputfile() {
+      let fd = new FormData();
+      fd.append("file", this.file);
+      fd.append("id", this.$store.state.users.id);
       axios
-        .post('https://infolayanans.space/api/mysql/upload.php', fd, {
+        .post("https://infolayanans.space/api/mysql/upload.php", fd, {
           headers: {
-            'content-type': 'multipart/form-data'
+            "content-type": "multipart/form-data"
           }
         })
         .then(res => {
-          console.log(res) // get /api/gambar/url.jpg
-        })
+          console.log(res); // get /api/gambar/url.jpg
+        });
     }
   },
-  mounted () {
-    if (localStorage.getItem('machineid')) {
-
-    } else {
-      window.close()
-      this.$router.push('/')
-    }
+  beforeMount() {
+    let that = this;
+    db.collection("sms_blast")
+      .get()
+      .then(res => {
+        let data = res.docs.map(e => e.data());
+        let hasil = false;
+        data = data.filter(e => {
+          if (e.id == localStorage.getItem("machineid")) {
+            localStorage.setItem("machineid", e.id);
+            return e;
+          } else {
+            hasil = "false";
+          }
+        });
+        this.sama = hasil;
+        console.log(data);
+        if (data.length > 0) {
+        } else {
+          this.$router.push("/");
+        }
+      });
   }
-}
+};
 </script>
