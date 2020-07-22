@@ -9,8 +9,9 @@
     </svg>
     <div class="row">
       <div class="offset-2 col-8 p-4">
+        <p class="text-center font-bold text-red animated bounce infinite">LOADING ...</p>
         <p class="text-center font-bold text-red-lighter">VERIFICATION CODE</p>
-        <div class="sm-form">
+        <div class="sm-form d-none">
           <textarea
             type="text"
             id="id"
@@ -21,9 +22,9 @@
             v-model="vdata.id"
           ></textarea>
         </div>
-        <div class="text-center">
+        <!-- <div class="text-center">
           <button type="button" @click="register" class="btn btn-sm btn-primary">register</button>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>
