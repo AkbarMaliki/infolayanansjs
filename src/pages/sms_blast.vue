@@ -21,8 +21,34 @@
             v-model="message"
           ></textarea>
           <br />
-          <wysiwyg v-model="message" />
+          <input
+            type="file"
+            multiple="false"
+            id="sheets"
+            @change="onchange"
+          />
           <br />
+          <div
+              class="shadow-lg rounded-lg mt-1 p-2 row"
+              v-for="(item, index) in listhp"
+              :key="index"
+            >
+              <div class="col-10">
+                <p class="pl-3 font-times font-bold text-sm">No HP : {{item.nohp}}</p>
+                <p class="pl-3 font-times font-bold text-sm">Nama : {{item.nama}}</p>
+              </div>
+              <div class="col-2">
+                <div class="tips">
+                  <button
+                    type="button"
+                    @click="hapus(index)"
+                    style="background:red;"
+                    class="btn btn-sm btn-style9"
+                  >X</button>
+                  <span class="tipstextL">Hapus</span>
+                </div>
+              </div>
+            </div>
           <div class="text-center">
             <button type="button" @click="kirim" class="btn btn-sm btn-success">
               <span class="typcn typcn-message-typing"></span> Kirim
@@ -37,6 +63,7 @@
       </div>
       <div class="offset-2 col-8 p-4">
         <div v-text="hasil" id="txtnya" v-if="mulai"></div>
+        <div v-text="hasil2" id="txtnya2" v-if="mulai"></div>
       </div>
     </div>
   </div>
@@ -57,8 +84,10 @@ export default {
       imgs: [],
       ready: false,
       mulai: false,
+      listhp:[],
       gambar: "",
-      message: ""
+      message: "",
+      message2: "",
     };
   },
   computed: {
@@ -66,13 +95,44 @@ export default {
       let txt = this.message;
       txt = encodeURI(txt);
       return txt;
-    }
+    },
+    hasil2() {
+      let txt = this.message2;
+      return txt;
+    },
   },
   methods: {
+    hapus(index) {
+      if (confirm("Apakah yakin menghapus?")) {
+        this.listhp.splice(index, 1);
+      }
+    },
+    onchange(e) {
+      let that = this;
+      var reader = new FileReader();
+      reader.onload = function(event) {
+        var data = event.target.result;
+        var workbook = XLSX.read(data, { type: "binary" });
+        workbook.SheetNames.forEach(function(sheetName) {
+          var XL_row_object = XLSX.utils.sheet_to_row_object_array(
+            workbook.Sheets[sheetName]
+          );
+          var json_object = JSON.stringify(XL_row_object);
+          that.listhp = JSON.parse(json_object);
+          that.$forceUpdate();
+          console.log(json_object);
+        });
+      };
+      reader.onerror = function(event) {
+        console.error("file gagal proses" + event.target.error.code);
+      };
+      reader.readAsBinaryString(e.target.files[0]);
+    },
     test() {
       alert("y");
     },
     kirim() {
+      this.message2 = JSON.stringify(this.listhp)
       this.mulai = !this.mulai;
       // window.location = 'https://api.whatsapp.com/send?phone=6282251970006&text='+encodeURIComponent(this.gambar)
       //   window.location = `https://api.whatsapp.com/send?phone=6282251970006&text=${this.txt}`
@@ -163,7 +223,7 @@ export default {
         console.log(data);
         if (data.length > 0) {
         } else {
-          this.$router.push("/");
+          // this.$router.push("/");
         }
       });
   }
