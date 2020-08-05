@@ -34,6 +34,7 @@ export default{
     downloadExcel
   },
     mounted() {
+        console.log(this.$route.query.data)
         this.td=JSON.parse(this.$route.query.data)
         let that=this
         setTimeout(() => {
